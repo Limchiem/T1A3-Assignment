@@ -49,10 +49,16 @@ while user_choice !=4:
         print ("invalid input")
 
     if user_choice == 1:
-        withdraw = float(input("How much would you like to withdraw?: "))
-        balance -= withdraw
-        print ("withdraw amount:", withdraw)
-        print ("Your remaining balance is: ", balance)
+        try:
+            withdraw = float(input("How much would you like to withdraw?: "))
+            if(balance < withdraw):
+                print("Insufficient funds")
+            else:
+                balance -= withdraw
+                print ("withdraw amount:", withdraw)
+                print ("Your remaining balance is: ", balance)
+        except:
+            print("Invalid input")
     
     elif user_choice == 2:
         deposit = float(input("How much would you like to deposit?: "))
