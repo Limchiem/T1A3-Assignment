@@ -49,7 +49,7 @@ loginId = ""
 
 while True:
     try:
-        loginId = input(str("What is your log in ID?: "))
+        loginId = str(input("What is your log in ID?: ").strip().lower())
         Id_match = [id for id in list_of_user if id.userId == loginId]
         if(len(Id_match) > 0):
             current_user = Id_match
