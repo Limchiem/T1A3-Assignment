@@ -3,7 +3,6 @@ import emoji
 from clear import clear
 from colored import fg, bg, attr
 from getpass4 import getpass
-
 # name of csv
 file_name = "login.csv"
 
