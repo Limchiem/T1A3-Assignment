@@ -5,8 +5,8 @@ print("\t***************************")
 print("\t***  Welcome To CA ATM  ***")
 print("\t***************************")
 
-user_choice = 0
-balance = 5000
+# user_choice = 0
+# balance = 5000
 # current_user = atm_user("","")
 
 # list_of_user = []
@@ -14,7 +14,7 @@ balance = 5000
 # list_of_user.append(atm_user("simon", 1234))
 # list_of_user.append(atm_user("mary", 1234))
 
-loginId = ""
+# loginId = ""
 
 file_name = "login.csv"
 
@@ -58,6 +58,7 @@ def login(file_name):
             print("Something went wrong.")
 
 def create_menu():
+    choice = ""
     print("1. Check balance")
     print("2. Withdraw")
     print("3. Deposit")
@@ -65,6 +66,36 @@ def create_menu():
     choice = input("Enter your selection: ")
     return choice
 
+def get_balance(username):
+    with open(file_name, "r", newline="") as f:
+        reader = csv.reader(f, delimiter=",")
+        for row in reader:
+            if row[0] == username:
+                return float(row[2])
+    print("Username not found.")
+    return None
+
+welcome()
+create_login(file_name)
+login(file_name)
+
+while choice != "4":
+    choice = create_menu()
+
+    if choice == "1":
+        username = input("Enter your username: ")
+        balance = get_balance(username)
+        if balance is not None:
+            print(f"Your balance is: {balance}")
+    elif choice == "2":
+        pass
+    elif choice == "3":
+        pass
+    elif choice == "4":
+        print("Thank you, and have a nice day.")
+        break
+    else:
+        print("Invalid selection. Please try again.")
 # with open(file_name, "r") as file:
 #     reader = csv.reader(file)
 
