@@ -58,7 +58,6 @@ def login(file_name):
             print("Something went wrong.")
 
 def create_menu():
-    choice = ""
     print("1. Check balance")
     print("2. Withdraw")
     print("3. Deposit")
@@ -72,12 +71,39 @@ def get_balance(username):
         for row in reader:
             if row[0] == username:
                 return float(row[2])
-    print("Username not found.")
+    print("Invalid user.")
     return None
+
+def update_balance(username, new_balance):
+    rows = []
+    with open(file_name, "r", newline="") as f:
+        reader = csv.reader(f, delimiter=",")
+        for row in reader:
+            if row[0] == username:
+                row[2] = str(new_balance)
+            rows.append(row)
+
+    with open(file_name, "w", newline="") as f:
+        writer = csv.writer(f, delimiter=",")
+        writer.writerows(rows)
+
+def withdraw(username, amount):
+    balance = get_balance(username)
+    if balance is not None:
+        if balance >= amount:
+            new_balance = balance - amount
+            update_balance(username, new_balance)
+            print(f"Withdrawal of {amount} successful.")
+        else:
+            print("Insufficient funds.")
+    else:
+        print("Invalid user")
 
 welcome()
 create_login(file_name)
 login(file_name)
+
+choice = ""
 
 while choice != "4":
     choice = create_menu()
@@ -88,7 +114,8 @@ while choice != "4":
         if balance is not None:
             print(f"Your balance is: {balance}")
     elif choice == "2":
-        pass
+        amount = float(input("Enter withdrawal amount: "))
+        withdraw(username, amount)
     elif choice == "3":
         pass
     elif choice == "4":
