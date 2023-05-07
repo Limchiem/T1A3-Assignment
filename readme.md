@@ -64,3 +64,7 @@ Now click `file` and to go `open folder` and open the folder you you unzipped. w
 Now in the terminal assuming you opened the file called LimChiem_T1A3 type `cd ./src` in the terminal.
 
 Once you've done that type `./run1.sh` to see if python is installed and then type `./run2.sh` and that should initialise the game.
+
+# Link to presentation
+
+https://youtu.be/lW55SrF9oTA
