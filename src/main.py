@@ -1,4 +1,4 @@
-from user_functions import atm_user
+# from user_functions import atm_user
 import csv
 
 print("\t***************************")
@@ -7,12 +7,12 @@ print("\t***************************")
 
 user_choice = 0
 balance = 5000
-current_user = atm_user("","")
+# current_user = atm_user("","")
 
-list_of_user = []
+# list_of_user = []
 
-list_of_user.append(atm_user("simon", 1234))
-list_of_user.append(atm_user("mary", 1234))
+# list_of_user.append(atm_user("simon", 1234))
+# list_of_user.append(atm_user("mary", 1234))
 
 loginId = ""
 
@@ -29,6 +29,33 @@ def welcome():
         db.close()
         print("db created")
 
+def create_login(file_name):
+    while True:
+        try:
+            user = input("Enter new Username: ")
+            pin = int(input("Enter new Pin "))
+            balance = float(input("Enter new balance: "))
+            with open(file_name, "a", newline="") as f:
+                writer = csv.writer(f, delimiter=",")
+                writer.writerow([user, pin, balance])
+                break
+        except:
+            print("Something went wrong.")
+
+def login(file_name):
+    while True:
+        try:
+            user = input("Enter Username: ")
+            pin = int(input("Enter PIN: "))
+            with open(file_name, "r", newline="") as f:
+                reader = csv.reader(f, delimiter=",")
+                for row in reader:
+                    if row[0] == user and int(row[1]) == pin:
+                        print("Login successful!")
+                        return True, float(row[2])
+                print("Invalid username or pin. Please try again.")
+        except:
+            print("Something went wrong.")
 
 # with open(file_name, "r") as file:
 #     reader = csv.reader(file)
