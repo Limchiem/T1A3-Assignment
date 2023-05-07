@@ -1,8 +1,8 @@
 import csv
-
-# print("\t***************************")
-# print("\t***  Welcome To CA ATM  ***")
-# print("\t***************************")
+from colored import fg, bg, attr
+import emoji
+from clear import clear
+from getpass4 import getpass
 
 # name of csv
 file_name = "login.csv"
@@ -13,12 +13,12 @@ def welcome():
     try:
         db = open(file_name, "r")
         db.close()
-        print("db exist")
+        print(emoji.emojize('db exist:thumbs_up:'))
     except FileNotFoundError as e:
         db = open(file_name, "w")
         db.write("login, PIN, Balance\n")
         db.close()
-        print("db created")
+        print(emoji.emojize('db created:thumbs_up:'))
 
 # input user, pin, balance gets written to csv file
 # accepts str, int and float for inputs
@@ -27,14 +27,14 @@ def create_login(file_name):
     while True:
         try:
             user = input("Enter new Username: ")
-            pin = int(input("Enter new Pin "))
+            pin = int(getpass("Enter new PIN: "))
             balance = float(input("Enter new balance: "))
             with open(file_name, "a", newline="") as f:
                 writer = csv.writer(f, delimiter=",")
                 writer.writerow([user, pin, balance])
                 break
         except:
-            print("Something went wrong.")
+            print(emoji.emojize('Something went wrong.:thumbs_down:'))
 
 # checks if log in details entered here matches created_login
 # for loops used to check through each row for a match of user and pin
@@ -42,26 +42,26 @@ def login(file_name):
     while True:
         try:
             user = input("Enter Username: ")
-            pin = int(input("Enter PIN: "))
+            pin = int(getpass("Enter PIN: "))
             with open(file_name, "r", newline="") as f:
                 reader = csv.reader(f, delimiter=",")
                 for row in reader:
                     if row[0] == user and int(row[1]) == pin:
-                        print("Login successful!")
+                        print(emoji.emojize('Login successful!:thumbs_up:'))
                         return True, float(row[2])
-                print("Invalid username or pin. Please try again.")
+                print(emoji.emojize('Invalid username or pin. Please try again.:thumbs_down:'))
         except:
-            print("Something went wrong.")
+            print(emoji.emojize('Something went wrong.:thumbs_down:'))
 
 # main menu
 def create_menu():
-    print("\t***************************")
-    print("\t***  Welcome To CA ATM  ***")
-    print("\t***************************")
-    print("1. Check balance")
-    print("2. Withdraw")
-    print("3. Deposit")
-    print("4. Exit")
+    print(f'{fg(1)}\t***************************{attr(0)}')
+    print(f'{fg(1)}\t***  Welcome To CA ATM  ***{attr(0)}')
+    print(f'{fg(1)}\t***************************{attr(0)}')
+    print(f'{fg(1)}{bg(7)}1. Check balance\n{attr(0)}')
+    print(f'{fg(2)}{bg(7)}2. Withdraw\n{attr(0)}')
+    print(f'{fg(14)}{bg(7)}3. Deposit\n{attr(0)}')
+    print(f'{fg(166)}{bg(7)}4. Exit\n{attr(0)}')
     choice = input("Enter your selection: ")
     return choice
 
@@ -97,24 +97,26 @@ def withdraw(username, amount):
         if balance >= amount:
             new_balance = balance - amount
             update_balance(username, new_balance)
-            print(f"Withdrawal of {amount} successful.")
+            print(f'Withdrawal of {fg(0)}{bg(7)}{amount}{attr(0)} successful.')
         else:
-            print("Insufficient funds.")
+            print(emoji.emojize('Insufficient funds.:frowning_face_with_open_mouth:'))
     else:
-        print("Invalid user")
+        print(emoji.emojize('Invalid user:frowning_face_with_open_mouth:'))
 # Deposit funds
 def deposit(username, amount):
     balance = get_balance(username)
     if balance is not None:
         new_balance = balance + amount
         update_balance(username, new_balance)
-        print(f"Deposit of {amount} successful.")
+        print(f'Deposit of {fg(0)}{bg(7)}{amount}{attr(0)} successful.')
     else:
-        print("Invalid user")
+        print(emoji.emojize('Invalid user:frowning_face_with_open_mouth:'))
 
 welcome()
 create_login(file_name)
 login(file_name)
+# clear used here to clear out previous entries - user,pin,balance
+clear()
 
 choice = ""
 
@@ -125,7 +127,7 @@ while choice != "4":
         username = input("Enter your username: ")
         balance = get_balance(username)
         if balance is not None:
-            print(f"Your balance is: {balance}")
+            print(f'Your balance is: {fg(0)}{bg(7)}{balance}{attr(0)}')
     elif choice == "2":
         amount = float(input("Enter withdrawal amount: "))
         withdraw(username, amount)
@@ -133,7 +135,7 @@ while choice != "4":
         amount = float(input("Enter Deposit amount: "))
         deposit(username, amount)
     elif choice == "4":
-        print("Thank you, and have a nice day.")
+        print(emoji.emojize('Thank you, and have a nice day.:full_moon_face:'))
         break
     else:
-        print("Invalid selection. Please try again.")
+        print(emoji.emojize('Invalid selection. Please try again.:frowning_face_with_open_mouth:'))

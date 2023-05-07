@@ -1,0 +1,8 @@
+caugetch==0.0.1
+clear==2.0.0
+clipboard==0.0.4
+colorama==0.4.6
+colored==1.4.4
+emoji==2.2.0
+getpass4==0.0.14.1
+pyperclip==1.8.2
