@@ -18,46 +18,45 @@ loginId = ""
 
 file_name = "login.csv"
 
-try:
-    login_file = open(file_name, "r")
-    login_file.close()
-    print("Please Log in using the following ID and PIN:")
-
-except FileNotFoundError as e:
-    login_file = open(file_name, "w")
-    login_file.write("ID,PIN,BALANCE\n")
-    login_file.write("simon,1234,10000.50\n")
-    login_file.write("mary,4321,5000.23\n")
-    login_file.close()
-    print("Account has been registered")
-
-with open(file_name, "r") as file:
-    reader = csv.reader(file)
-
-    for row in reader:
-        print(row[0], row[1])
-
-while True:
+def welcome():
     try:
-        loginId = str(input("Please enter your log in ID: \n").strip().lower())
-        Id_match = [id for id in list_of_user if id.userId == loginId]
-        if(len(Id_match) > 0):
-            current_user = Id_match[0]
-            break
-        else:
-            print("Incorrect User ID. Please try again")
-    except:
-        print("Incorrect User ID. Please try again")
+        db = open(file_name, "r")
+        db.close()
+        print("db exist")
+    except FileNotFoundError as e:
+        db = open(file_name, "w")
+        db.write("login, PIN, Balance\n")
+        db.close()
+        print("db created")
 
-while True:
-    try:
-        pin = int(input("Please enter your pin: \n").strip())
-        if(current_user.get_userPin() == pin):
-            break
-        else:
-            print("Incorrect PIN. Please try again.")
-    except:
-        print("Incorrect PIN. Please try again.")
+
+# with open(file_name, "r") as file:
+#     reader = csv.reader(file)
+
+#     for row in reader:
+#         print(row[0], row[1])
+
+# while True:
+#     try:
+#         loginId = str(input("Please enter your log in ID: \n").strip().lower())
+#         Id_match = [id for id in list_of_user if id.userId == loginId]
+#         if(len(Id_match) > 0):
+#             current_user = Id_match[0]
+#             break
+#         else:
+#             print("Incorrect User ID. Please try again")
+#     except:
+#         print("Incorrect User ID. Please try again")
+
+# while True:
+#     try:
+#         pin = int(input("Please enter your pin: \n").strip())
+#         if(current_user.get_userPin() == pin):
+#             break
+#         else:
+#             print("Incorrect PIN. Please try again.")
+#     except:
+#         print("Incorrect PIN. Please try again.")
 
 # print("Welcome", ) add names to class tomorrow.
 
