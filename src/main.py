@@ -1,9 +1,7 @@
 import csv
 import emoji
-
 from clear import clear
 from colored import fg, bg, attr
-
 from getpass4 import getpass
 
 # name of csv
@@ -28,8 +26,8 @@ def welcome():
 def create_login(file_name):
     while True:
         try:
-            user = input("Enter new Username: ")
-            pin = int(getpass("Enter new PIN: "))
+            user = input("Enter new Username: ").lower()
+            pin = int(getpass("Enter new PIN: ").strip())
             balance = float(input("Enter new balance: "))
             with open(file_name, "a", newline="") as f:
                 writer = csv.writer(f, delimiter=",")
@@ -43,8 +41,8 @@ def create_login(file_name):
 def login(file_name):
     while True:
         try:
-            user = input("Enter Username: ")
-            pin = int(getpass("Enter PIN: "))
+            user = input("Enter Username: ").lower()
+            pin = int(getpass("Enter PIN: ").strip())
             with open(file_name, "r", newline="") as f:
                 reader = csv.reader(f, delimiter=",")
                 for row in reader:
